@@ -17,6 +17,11 @@ jobs:
       TF_VAR_aws_region: "us-east-1" # Specify the AWS Region you are using
 
     steps:
+      - name: Echo
+        run: |
+          echo "$TF_VAR_aws_access_id"
+          echo "TF_VAR_aws_secret_access_key"
+
       - name: Checkout code
         uses: actions/checkout@v2
 
