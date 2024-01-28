@@ -6,7 +6,7 @@ variable "aws_region" {
 
 variable "aws_profile" {
   type    = string
-  default = ""
+  default = null
 }
 
 variable "aws_access_id" {
