@@ -8,8 +8,10 @@ terraform {
 }
 
 provider "aws" {
-  region  = "us-east-1"
-  profile = "TerraformUser"
+  region     = var.aws_region
+  profile    = var.aws_profile
+  access_key = var.aws_access_id
+  secret_key = var.aws_secret_access_key
 }
 
 resource "aws_instance" "example" {
