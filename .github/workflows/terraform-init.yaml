@@ -1,4 +1,4 @@
-name: Develop CD Pipeline
+name: Terraform Init
 env:
   ACTIONS_RUNNER_DEBUG: true
 
