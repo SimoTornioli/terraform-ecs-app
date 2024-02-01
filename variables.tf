@@ -6,8 +6,8 @@ variable "aws_region" {
 variable "aws_role_arn" {
   description = "The AWS role arn"
   type        = string
-  sensitive =  true
-  default = null
+  sensitive   = true
+  default     = null
 }
 
 variable "aws_profile" {
@@ -15,12 +15,12 @@ variable "aws_profile" {
   default = null
 }
 
-variable "aws_access_id" {
-  sensitive = true
-  type      = string
-}
+# variable "aws_access_id" {
+#   sensitive = true
+#   type      = string
+# }
 
-variable "aws_secret_access_key" {
-  sensitive = true
-  type      = string
-}
+# variable "aws_secret_access_key" {
+#   sensitive = true
+#   type      = string
+# }
