@@ -6,32 +6,30 @@ on:
   push:
     branches: ['terraform-init']
   pull_request:
+
+permissions:
+  id-token: write
+  contents: read # This is required for actions/checkout@v2
     
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     environment: develop
     env:
-      TF_VAR_aws_access_id: ${{ secrets.AWS_ACCESS_KEY }}
-      TF_VAR_aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      TF_VAR_aws_region: "us-east-1" # Specify the AWS Region you are using
+      # TF_VAR_aws_access_id: ${{ secrets.AWS_ACCESS_KEY }}
+      # TF_VAR_aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+      AWS_REGION: ${{ secrets.AWS_REGION }} # Specify the AWS Region you are using
 
     steps:
-      - name: Echo
-        run: |
-          echo "$TF_VAR_aws_access_id"
-          echo "$TF_VAR_aws_secret_access_key"
+      - name: configureawscredentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{env.AWS_ROLE_ARN}}
+          aws-region: ${{env.AWS_REGION}}
 
       - name: Checkout code
         uses: actions/checkout@v2
-
-      # Assume IAM Role
-      # - name: Configure AWS Credentials
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     aws-region: ${{ env.AWS_REGION }}
 
       # Terraform Installation
       - name: Install Terraform
@@ -40,7 +38,7 @@ jobs:
       # Terraform base AWS services deployment
       - name: Terraform Init
         run: |
-          terraform init -backend-config="region=$TF_VAR_aws_region" -backend-config="access_key=$TF_VAR_aws_access_id" -backend-config="secret_key=$TF_VAR_aws_secret_access_key"
+          terraform init
 
       # - name: Terraform Destroy
       #   run: terraform destroy -auto-approve
