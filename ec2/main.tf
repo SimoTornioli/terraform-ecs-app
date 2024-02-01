@@ -1,4 +1,10 @@
 terraform {
+  backend "s3" {
+    bucket         = "tf-bucket-state-simo" # REPLACE WITH YOUR BUCKET NAME
+    key            = "terraform-ecs-app/terraform.tfstate"
+    dynamodb_table = "terraform-state-locking"
+    encrypt        = true
+  }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -12,6 +18,11 @@ provider "aws" {
   profile    = var.aws_profile
   access_key = var.aws_access_id
   secret_key = var.aws_secret_access_key
+}
+
+resource "aws_instance" "example" {
+  ami           = "ami-011899242bb902164" # Ubuntu 20.04 LTS // us-east-1
+  instance_type = "t2.micro"
 }
 
 resource "aws_s3_bucket" "terraform_state" {
