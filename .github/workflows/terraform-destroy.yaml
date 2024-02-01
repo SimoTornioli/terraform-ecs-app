@@ -1,0 +1,41 @@
+name: Develop CD Pipeline
+env:
+  ACTIONS_RUNNER_DEBUG: true
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read # This is required for actions/checkout@v2
+    
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: develop
+    env:
+      # TF_VAR_aws_access_id: ${{ secrets.AWS_ACCESS_KEY }}
+      # TF_VAR_aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+      AWS_REGION: ${{ secrets.AWS_REGION }} # Specify the AWS Region you are using
+
+    steps:
+      - name: configureawscredentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{env.AWS_ROLE_ARN}}
+          aws-region: ${{env.AWS_REGION}}
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Terraform Installation
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      # Terraform base AWS services deployment
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve
