@@ -6,7 +6,7 @@ terraform {
     }
   }
   backend "s3" {
-    bucket         = "terraform-bucket" # REPLACE WITH YOUR BUCKET NAME
+    bucket         = "terraform-bucket-config-simotornioli" # REPLACE WITH YOUR BUCKET NAME
     key            = "terraform-ecs-app/terraform.tfstate"
     dynamodb_table = "terraform-state-locking"
     encrypt        = true
@@ -26,7 +26,7 @@ resource "aws_instance" "example" {
 }
 
 resource "aws_s3_bucket" "terraform_state" {
-  bucket        = "terraform-bucket" # REPLACE WITH YOUR BUCKET NAME
+  bucket        = "terraform-bucket-config-simotornioli" # REPLACE WITH YOUR BUCKET NAME
   force_destroy = true
 }
 
