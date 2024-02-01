@@ -40,7 +40,7 @@ jobs:
       # Terraform base AWS services deployment
       - name: Terraform Init
         run: |
-          terraform init -backend-config="access_key=$TF_VAR_aws_access_id" -backend-config="secret_key=$TF_VAR_aws_secret_access_key"
+          terraform init -backend-config="region=$TF_VAR_aws_region" -backend-config="access_key=$TF_VAR_aws_access_id" -backend-config="secret_key=$TF_VAR_aws_secret_access_key"
 
       - name: Terraform Destroy
         run: terraform destroy -auto-approve
