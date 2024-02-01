@@ -3,6 +3,12 @@ variable "aws_region" {
   type        = string
   default     = "us-east-1"
 }
+variable "aws_role_arn" {
+  description = "The AWS role arn"
+  type        = string
+  sensitive =  true
+  default = null
+}
 
 variable "aws_profile" {
   type    = string
