@@ -14,13 +14,3 @@ variable "aws_profile" {
   type    = string
   default = null
 }
-
-# variable "aws_access_id" {
-#   sensitive = true
-#   type      = string
-# }
-
-# variable "aws_secret_access_key" {
-#   sensitive = true
-#   type      = string
-# }

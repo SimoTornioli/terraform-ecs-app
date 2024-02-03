@@ -14,8 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: develop
     env:
-      # TF_VAR_aws_access_id: ${{ secrets.AWS_ACCESS_KEY }}
-      # TF_VAR_aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
       AWS_REGION: ${{ secrets.AWS_REGION }} # Specify the AWS Region you are using
 

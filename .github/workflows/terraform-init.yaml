@@ -10,6 +10,10 @@ on:
 permissions:
   id-token: write
   contents: read # This is required for actions/checkout@v2
+
+defaults:
+  run:
+    working-directory: ec2_full_arch 
     
 jobs:
   build-and-deploy:
